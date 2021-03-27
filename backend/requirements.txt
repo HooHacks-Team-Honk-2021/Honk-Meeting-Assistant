@@ -1,5 +1,7 @@
 click==7.1.2
 numpy == 1.16.1
+twilio
+cmake
 opencv_python == 3.4.5.20
 dlib == 19.16.0
 Flask==1.1.2
@@ -9,3 +11,4 @@ MarkupSafe==1.1.1
 Werkzeug==1.0.1
 flask_api
 flask_cors
+flask_socketio

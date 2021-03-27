@@ -262,8 +262,10 @@
     "react-router-dom": "^5.2.0",
     "react-select": "^4.3.0",
     "react-sliding-pane": "^7.0.0",
+    "react-webcam": "^5.2.3",
     "regenerator-runtime": "^0.13.5",
     "roboto-fontface": "^0.10.0",
+    "socket.io-client": "^4.0.0",
     "source-map-support": "^0.5.19",
     "typeface-roboto": "^1.1.13"
   },
