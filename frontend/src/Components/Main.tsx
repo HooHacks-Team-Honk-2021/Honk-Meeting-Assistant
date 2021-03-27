@@ -14,37 +14,41 @@ import videoon from '../assets/videoon.svg';
 import videooff from '../assets/videooff.svg';
 
 export default class Main extends React.Component {
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
         this.state = {
             audio: false,
-            video: false, 
-            isPaneOpen: false, 
+            video: false,
+            isPaneOpen: false,
         }
     }
     render() {
-        const { audio, video, isPaneOpen }:any = this.state;
-        return(
+        const { audio, video, isPaneOpen }: any = this.state;
+        return (
             <div>
                 <div className="top-menu">
                     <div>
-                        <button className="recording red">Video Recording</button>
-                        <button className="recording green">Audio Recording</button>
+                        {video && (
+                            <button className="recording red" disabled>Video Recording</button>
+                        )}
+                        {audio && (
+                            <button className="recording green" disabled>Audio Recording</button>
+                        )}
                     </div>
-                    <div className="settings">
-                        <SettingModal />
-                    </div>
-                </div>  
+                </div>
+                <div className="top-menu">
+                    <SettingModal />
+                </div>
                 <div className="menu">
-                    <button onClick={() => this.setState({audio:!audio})} className={audio ? "start-stop-btn blue" : "start-stop-btn red"}>
-                        <img className="icon1" src={audio ? audioon : audiooff}/>
+                    <button onClick={() => this.setState({ audio: !audio })} className={audio ? "start-stop-btn blue" : "start-stop-btn red"}>
+                        <img className="icon1" src={audio ? audioon : audiooff} />
                         {audio ? "Stop " : "Start "} Audio
                     </button>
-                    <button onClick={() => this.setState({video:!video})} className={video ? "start-stop-btn blue" : "start-stop-btn red"}>
-                        <img className="icon2" src={video ? videoon : videooff}/>
+                    <button onClick={() => this.setState({ video: !video })} className={video ? "start-stop-btn blue" : "start-stop-btn red"}>
+                        <img className="icon2" src={video ? videoon : videooff} />
                         {video ? "Stop " : "Start "} Video
                     </button>
-                </div>        
+                </div>
             </div>
         )
     }
