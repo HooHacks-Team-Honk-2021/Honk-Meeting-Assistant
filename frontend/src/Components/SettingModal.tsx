@@ -15,6 +15,7 @@ import {
 import KeywordPicker from "./KeywordPicker.tsx"
 import CreatableSelect from 'react-select/creatable';
 import { connect } from 'http2';
+import { motionValue } from 'framer-motion';
 
 class SettingModal extends React.Component{
 
@@ -25,7 +26,7 @@ class SettingModal extends React.Component{
             firstName : "", 
             lastName : "", 
             phoneNumber : "", 
-            keywords : [], 
+            keywords : localStorage.getItem('keyword') === null ? [] : localStorage.getItem('keyword') , 
         } 
 
         this.handleChange = this.handleChange.bind(this); 
@@ -33,10 +34,16 @@ class SettingModal extends React.Component{
 
     handleChange = (value : any) => {
       const {keywords}:any = this.state; 
-      console.log(value)
-      this.setState({keywords: [...this.state.keywords, value]})
+      this.setState({keywords: value})
       console.log(keywords)
-      
+      localStorage.setItem('keyword', keywords);
+   }
+
+   openEvent(){
+    if(localStorage.getItem('keyword') === null){
+        let {keywords}:any = this.state; 
+        this.setState({keywords: [...keywords, localStorage.getItem('keyword') ]})
+    }
    }
 
     render(){
@@ -76,7 +83,7 @@ class SettingModal extends React.Component{
                     <Button colorScheme="blue" mr={3} onClick={() => this.setState({isPaneOpen : false})}>
                       Save
                     </Button>
-                    <Button loadOptions={keywords} onClick={() => this.setState({isPaneOpen : false})}>Cancel</Button>
+                    <Button options={keywords} onClick={() => this.setState({isPaneOpen : false})}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
