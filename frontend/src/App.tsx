@@ -10,11 +10,11 @@ import Camera from './Camera';
 const Hello = () => {
   return (
     <div>
-      <Main/>
-      <Camera/>
+      <Main />
     </div>
   );
 };
+//      <Camera/>
 
 export default function App() {
   return (

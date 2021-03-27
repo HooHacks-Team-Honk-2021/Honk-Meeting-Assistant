@@ -12,38 +12,37 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react"
-import KeywordPicker from "./KeywordPicker.tsx"
+//import KeywordPicker from "./KeywordPicker.tsx"
 import CreatableSelect from 'react-select/creatable';
 import { connect } from 'http2';
 import { motionValue } from 'framer-motion';
 
+const def = [];
 class SettingModal extends React.Component {
 
-  constructor(props: any) {
+  constructor(props) {
     super(props);
     this.state = {
       isPaneOpen: false,
       firstName: "",
       lastName: "",
       phoneNumber: "",
-      keywords: localStorage.getItem("keywords") === null ? [] : Array.from(localStorage.getItem("keywords")),
+      keywords: localStorage.getItem("keywords") === null ? [] : JSON.parse(localStorage.getItem("keywords")),
     }
-
+    console.log('gotem')
     console.log(localStorage.getItem("keywords"));
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = (value: any) => {
-    console.log(value);
-    const { keywords }: any = this.state;
-    this.setState({ keywords: [...keywords, value] }, () => {
-      localStorage.setItem("keywords",keywords)
-      console.log(keywords)
+  handleChange = (value) => {
+    const newKeywords = [...value];
+    this.setState({ keywords: newKeywords }, () => {
+      localStorage.setItem("keywords", JSON.stringify(newKeywords));
     })
   }
 
   render() {
-    const { isPaneOpen, firstName, lastName, phoneNumber, keywords }: any = this.state;
+    const { isPaneOpen, firstName, lastName, phoneNumber, keywords } = this.state;
     return (
       <div>
         <button className="start-stop-btn blue settings" onClick={() => this.setState({ isPaneOpen: true })}>Settings</button>
@@ -55,12 +54,12 @@ class SettingModal extends React.Component {
 
             <ModalBody pb={6}>
               <FormControl>
-                <FormLabel>First name</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <Input placeholder="First name" />
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Last name</FormLabel>
+                <FormLabel>Last Name</FormLabel>
                 <Input placeholder="Last name" />
               </FormControl>
 
@@ -71,7 +70,7 @@ class SettingModal extends React.Component {
 
               <FormControl mt={4}>
                 <FormLabel>Keywords</FormLabel>
-                <CreatableSelect options={keywords} isMulti onChange={this.handleChange}/>
+                <CreatableSelect options={def} isMulti onChange={this.handleChange} value={keywords} />
               </FormControl>
 
             </ModalBody>
