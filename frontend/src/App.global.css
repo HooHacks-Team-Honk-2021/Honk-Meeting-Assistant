@@ -1,4 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.start-stop-btn {
+  border-radius: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: #ffffff;
+  width: 175px;
+  height: 50px;
+  margin: 25px;
+  border: none !important;
+  display: flex;
+  flex-direction: row;
+  padding: 14px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.top-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px;
+}
+
+.recording {
+  width: 136px;
+  height: 25px;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.settings {
+  position: absolute; 
+  right: 0;
+  left: 1000px;
+  float:right;
+  justify-content: flex-end;
+}
+
+.red {
+  background: #e00404;
+}
+
+.blue {
+  background: #42a4ff;
+}
+
+.green {
+  background: #00c814;
+}
+
+.icon1,
+.icon2 {
+  padding-right: 10px;
+}
+
+.icon2 {
+  padding-top: 2px;
+}
+
 /*
+//padding: 14px;
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
