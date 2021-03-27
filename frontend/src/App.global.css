@@ -21,6 +21,14 @@
 .menu {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+}
+
+.top-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px;
 }
 
 .recording {
@@ -28,6 +36,14 @@
   height: 25px;
   border-radius: 4px;
   color: #ffffff;
+}
+
+.settings {
+  position: absolute; 
+  right: 0;
+  left: 1000px;
+  float:right;
+  justify-content: flex-end;
 }
 
 .red {
