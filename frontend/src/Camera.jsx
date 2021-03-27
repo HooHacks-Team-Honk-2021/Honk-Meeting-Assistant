@@ -7,7 +7,7 @@ import Webcam from 'react-webcam';
 const WebcamComponent = () => <Webcam />;
 const FPS = 0.5;
 
-class Hello extends React.Component {
+class Camera extends React.Component {
 
     constructor(props) {
         super(props)
@@ -61,4 +61,4 @@ class Hello extends React.Component {
   }
 }
 
-export default Hello;
+export default Camera;

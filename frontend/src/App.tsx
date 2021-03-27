@@ -5,13 +5,13 @@ import './App.global.css';
 //import Name from './Components/Name'
 import Main from './Components/Main';
 import { ChakraProvider } from "@chakra-ui/react"
-import Webcam from './Webcam';
+import Camera from './Camera';
 
 const Hello = () => {
   return (
     <div>
       <Main/>
-      <Webcam/>
+      <Camera/>
     </div>
   );
 };
