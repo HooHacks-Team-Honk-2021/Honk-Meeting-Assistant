@@ -143,7 +143,22 @@ class SettingModal extends React.Component {
               <Button
                 colorScheme="blue"
                 mr={3}
-                onClick={() => this.setState({ isPaneOpen: false })}
+                onClick={() =>
+                  {
+                    fetch('https://localhost:5000/phone', {
+                      method: 'POST',
+                      headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        name: this.state.firstName,
+                        phone : this.state.phoneNumber
+                      })
+                    })
+                    this.setState({ isPaneOpen: false })
+ 
+                  }}
               >
                 Done
               </Button>

@@ -5,7 +5,7 @@ import json
 # at each addition of a bool value, call this file and loop through the text file
 # if there is a a ratio of 135:150 frames looking away, send notification
 # once notification sent, time.sleep(3000) and reset txt file
-NUM_TO_NOTIFY = 50
+NUM_TO_NOTIFY = 25
 RATIO = 5/6
 
 def should_notify():
@@ -55,7 +55,7 @@ def should_notify():
             name = data["name"]
             
         print(phone, name)
-        #send_text(phone, name)
+        send_text(phone, name)
         return True
 
     else:

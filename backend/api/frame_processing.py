@@ -8,7 +8,7 @@ import json
 import os
 from .ml.notification_helper import should_notify
 
-NUM_TO_NOTIFY = 50
+NUM_TO_NOTIFY = 25
 gaze = GazeTracking()
 
 # reset array with whether the user is looking or not
@@ -20,7 +20,10 @@ with open("ml/frames.json", "w") as frames:
 def handle_frame(message):
 
     #print('Data', message["data"])
-    image_string = message["data"].split(",")[1]
+    try:
+        image_string = message["data"].split(",")[1]
+    except:
+        return
     msg = base64.b64decode(image_string)
         
     filename = f'test_images/some_image.jpeg'  # I assume you have a way of picking unique filenames
