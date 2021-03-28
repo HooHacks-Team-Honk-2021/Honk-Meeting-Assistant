@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { io }  from "socket.io-client";
 import Webcam from 'react-webcam';
 
-const FPS = 0.5;
+const FPS = 5;
 
 class Camera extends React.Component {
 
