@@ -2,6 +2,7 @@ from flask_api import FlaskAPI
 from flask import request
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
+import json
 
 app = FlaskAPI(__name__)
 socketio = SocketIO(app)
@@ -16,7 +17,7 @@ def save_phone_num():
     """
     personal_info = json.loads(request.get_data())
 
-    with open("../ml/phone.json", "w") as phone:
+    with open("ml/phone.json", "w") as phone:
         json.dump({"name": personal_info["name"], "phone": personal_info["phone"]}, phone)
 
     return 'Successfully saved phone number', 200
