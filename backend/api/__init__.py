@@ -9,6 +9,18 @@ CORS(app)
 
 from api.frame_processing import handle_frame
 
+@app.route("/phone", methods=["POST"])
+def save_phone_num():
+    """
+    Method to save phone number in text file
+    """
+    personal_info = json.loads(request.get_data())
+
+    with open("../ml/phone.json", "w") as phone:
+        json.dump({"name": personal_info["name"], "phone": personal_info["phone"]}, phone)
+
+    return 'Successfully saved phone number', 200
+
 
 @socketio.on('connect')
 def test_connect():
