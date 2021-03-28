@@ -6,6 +6,10 @@ import cv2
 from imageio import imread
 import io
 from .gaze_tracking import GazeTracking
+import sys
+from PIL import Image
+#np.set_printoptions(threshold=sys.maxsize)
+
 
 gaze = GazeTracking()
 
@@ -15,25 +19,60 @@ def handle_frame(message):
     # print('someone sent to the websocket', message)
     print("message")
     #print('Data', message["data"])
-    image_string = message["data"]
+    image_string = message["data"].split(",")[1]
+    msg = base64.b64decode(image_string)
+    
+    count = 0
+    with open("../ml/frames.txt", "r+") as frames:
+        lines = frames.readlines()
+        print(str(lines))
+        curr_list = list(eval(lines[1]))
+        print(curr_list)
+        count = len(curr_list)
         
-    # reconstruct image as an numpy array
-    img_data = base64.b64decode(image_string)
-    #img = imread(io.BytesIO(base64.b64decode(image_string)))
+    filename = f'test_images/some_image{count}.jpeg'  # I assume you have a way of picking unique filenames
+    with open(filename, 'wb') as f:
+        f.write(msg)
 
-    nparr = np.fromstring(img_data, np.uint8)
+            
+    with open(filename, "rb") as f:
+        im_b64 = base64.b64encode(f.read())
 
-    frame = nparr
+    os.remove(filename)
+
+    im_bytes = base64.b64decode(im_b64)
+    im_arr = np.frombuffer(im_bytes, dtype=np.uint8)  # im_arr is one-dim Numpy array
+    img = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
+    print(img)
+    frame = img
 
     gaze.refresh(frame)
 
+    with open("../ml/frames.txt", "r+") as frames:
+        lines = frames.readlines()
+        curr_list = list(eval(lines[1]))
+        curr_list.append(gaze.horizontal_ratio())
+        lines[1] = str(curr_list)
+    
+    with open("../ml/frames.txt", "w") as frames:
+        frames.writelines(lines)
+
+    print(gaze.horizontal_ratio())
+    print("left")
+    print(gaze.is_left())
+    print("right")
+    print(gaze.is_right())
+    print("center")
+    print(gaze.is_center())
+
+    """
     print(gaze.is_center())
     is_center = gaze.is_center()
 
     with open("../ml/frames.txt", "r+") as frames:
-        print(frames)
         lines = frames.readlines()
         print(lines[0])
+    """
 
     """
     if not gaze.is_center():

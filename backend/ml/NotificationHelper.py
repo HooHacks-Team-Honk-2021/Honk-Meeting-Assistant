@@ -1,4 +1,5 @@
 from collections import Counter
+from notify import send_text
 # ever growing text file where bool values are added (0,1)
 # at each addition of a bool value, call this file and loop through the text file
 # if there is a a ratio of 135:150 frames looking away, send notification
@@ -47,7 +48,7 @@ def should_notify():
         return False
 
 
-"""
+    """
     while r < len(nums):
         if windowchars[1] > 130:
         print("send notif")
@@ -66,7 +67,5 @@ def should_notify():
 
         l += 1
         r += 1
-
-
     """
 should_notify()
