@@ -36,13 +36,14 @@ class Camera extends React.Component {
 
    screenshot() {
        var screenshot = this.webcam.current.getScreenshot();
+       console.log(screenshot)
        this.socket.emit("frame", {"data": screenshot})
    } 
 
   render() {
       return(
-          <div>
-            <Webcam 
+          <div>  
+            <Webcam  
                 ref={this.webcam}
             />
           </div>

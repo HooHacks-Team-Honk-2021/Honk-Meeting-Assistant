@@ -11,7 +11,6 @@ const Hello = () => {
   return (
     <div>
       <Main />
-      <Camera/>
     </div>
   );
 };
