@@ -1,0 +1,6 @@
+We used https://github.com/antoinelame/GazeTracking as part of our code (in the backend/api/gaze_tracking folder) in order to more effectively track a person's gaze in each frame.
+
+For the front-end, we used Chakra UI for the styling and cited our components (including react-webcam) for the actual display of the application.
+We started our Electron project using electron-react-boilerplate. 
+
+All of the python libraries we used are stated in backend/requirements.txt, and they are all public and installable via pip.
