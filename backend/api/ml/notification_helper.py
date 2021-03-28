@@ -1,11 +1,12 @@
 from collections import Counter
-from notify import send_text
+from ..ml.notify import send_text
 import json
 # ever growing text file where bool values are added (0,1)
 # at each addition of a bool value, call this file and loop through the text file
 # if there is a a ratio of 135:150 frames looking away, send notification
 # once notification sent, time.sleep(3000) and reset txt file
-
+NUM_TO_NOTIFY = 50
+RATIO = 5/6
 
 def should_notify():
     """
@@ -31,34 +32,34 @@ def should_notify():
     if we find x 1s in the last x numbers
      
     """
-    nums = [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1]
-    last_notif = 173
-    curr = 300
-    buff = 500
-
-    if last_notif + buff > curr:
-        return False
+    nums = []
+    with open("ml/frames.json", "r") as frames:
+        nums = json.load(frames)["is_center_arr"]
 
     occurrences = Counter(nums)
+    print(occurrences[1], len(nums))
 
-    if occurrences[1] > 130:
+    if occurrences[1] > RATIO * NUM_TO_NOTIFY:
+
         print("send notif")
 
         # reset array with whether the user is looking or not
-        with open("frames.json", "w") as frames:
+        with open("ml/frames.json", "w") as frames:
             json.dump({"is_center_arr": []}, frames)
 
         phone = ""
         name = ""
-        with open("phone.json". "r") as phone:
-            data = json.loads(phone)
+        with open("ml/phone.json", "r") as phone:
+            data = json.load(phone)
             phone = data["phone"]
             name = data["name"]
             
-        send_text(phone, name)
+        print(phone, name)
+        #send_text(phone, name)
         return True
 
     else:
+
         return False
 
 

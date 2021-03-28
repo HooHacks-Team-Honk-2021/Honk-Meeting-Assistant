@@ -6,8 +6,14 @@ import cv2
 from .gaze_tracking import GazeTracking
 import json
 import os
+from .ml.notification_helper import should_notify
 
+NUM_TO_NOTIFY = 50
 gaze = GazeTracking()
+
+# reset array with whether the user is looking or not
+with open("ml/frames.json", "w") as frames:
+    json.dump({"is_center_arr": []}, frames)
 
 # Handle the webapp sending a message to the websocket
 @socketio.on('frame')
@@ -30,9 +36,15 @@ def handle_frame(message):
 
     gaze.refresh(img)
 
-    with open("../ml/frames.json", "r") as frames:
+    notify = False
+
+    with open("ml/frames.json", "r") as frames:
         data = json.load(frames)
         curr_list = data["is_center_arr"]
+        
+        # if the length reaches 150, cut off the beginning 
+        if len(curr_list) == NUM_TO_NOTIFY:
+            curr_list = curr_list[1:]
 
         # treating None as looking away from the screen
         print(gaze.is_center())
@@ -41,7 +53,11 @@ def handle_frame(message):
         else:
             curr_list.append(1)
 
+            # if off center, check if notify
+            notify = should_notify()
+
         data["is_center_arr"] = curr_list
     
-    with open("../ml/frames.json", "w") as frames:
-        json.dump(data, frames)
+    if not notify:
+        with open("ml/frames.json", "w") as frames:
+            json.dump(data, frames)
