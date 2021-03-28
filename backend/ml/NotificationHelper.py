@@ -1,5 +1,6 @@
 from collections import Counter
 from notify import send_text
+import json
 # ever growing text file where bool values are added (0,1)
 # at each addition of a bool value, call this file and loop through the text file
 # if there is a a ratio of 135:150 frames looking away, send notification
@@ -42,6 +43,19 @@ def should_notify():
 
     if occurrences[1] > 130:
         print("send notif")
+
+        # reset array with whether the user is looking or not
+        with open("frames.json", "w") as frames:
+            json.dump({"is_center_arr": []}, frames)
+
+        phone = ""
+        name = ""
+        with open("phone.json". "r") as phone:
+            data = json.loads(phone)
+            phone = data["phone"]
+            name = data["name"]
+            
+        send_text(phone, name)
         return True
 
     else:
