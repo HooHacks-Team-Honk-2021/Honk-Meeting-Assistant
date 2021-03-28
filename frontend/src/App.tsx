@@ -14,7 +14,6 @@ const Hello = () => {
     </div>
   );
 };
-//      <Camera/>
 
 export default function App() {
   return (

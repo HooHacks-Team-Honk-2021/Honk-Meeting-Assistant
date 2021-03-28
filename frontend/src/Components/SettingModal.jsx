@@ -16,22 +16,31 @@ import {
 import CreatableSelect from 'react-select/creatable';
 import { connect } from 'http2';
 import { motionValue } from 'framer-motion';
+import validator from 'validator'
 
-const def = [];
+
+const def = [
+  { label: "exam", value: "exam" },
+  { label: "test", value: "test" },
+  { label: "quiz", value: "quiz" },
+  { label: "homework", value: "homework" },
+  { label: "assignment", value: "assignment" }
+];
 class SettingModal extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       isPaneOpen: false,
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
+      firstName: localStorage.getItem("firstName") === null ? "" : localStorage.getItem("firstName"),
+      lastName: localStorage.getItem("lastName") === null ? "" : localStorage.getItem("lastName"),
+      phoneNumber: localStorage.getItem("phoneNumber") === null ? "" : localStorage.getItem("phoneNumber"),
       keywords: localStorage.getItem("keywords") === null ? [] : JSON.parse(localStorage.getItem("keywords")),
     }
-    console.log('gotem')
-    console.log(localStorage.getItem("keywords"));
     this.handleChange = this.handleChange.bind(this);
+    this.handleFirstName = this.handleFirstName.bind(this);
+    this.handleLastName = this.handleLastName.bind(this);
+    this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
   }
 
   handleChange = (value) => {
@@ -41,12 +50,31 @@ class SettingModal extends React.Component {
     })
   }
 
+
+  handleFirstName = (e) => {
+    this.setState({ firstName: e.target.value }, () => {
+      localStorage.setItem("firstName", e.target.value);
+    })
+  }
+
+
+  handleLastName = (e) => {
+    this.setState({ lastName: e.target.value }, () => {
+      localStorage.setItem("lastName", e.target.value);
+    })
+  }
+
+  handlePhoneNumber = (e) => {
+    this.setState({ phoneNumber: e.target.value }, () => {
+      localStorage.setItem("phoneNumber", e.target.value);
+    })
+  }
+
   render() {
     const { isPaneOpen, firstName, lastName, phoneNumber, keywords } = this.state;
     return (
       <div>
-        <button className="start-stop-btn blue settings" onClick={() => this.setState({ isPaneOpen: true })}>Settings</button>
-
+        <button className="start-stop-btn grey settings" onClick={() => this.setState({ isPaneOpen: true })}>Settings</button>
         <Modal isOpen={isPaneOpen} onClose={() => this.setState({ isPaneOpen: true })}>
           <ModalOverlay />
           <ModalContent>
@@ -55,17 +83,17 @@ class SettingModal extends React.Component {
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>First Name</FormLabel>
-                <Input placeholder="First name" />
+                <Input value={firstName} placeholder="First Name" onChange={(e) => this.handleFirstName(e)} />
               </FormControl>
 
               <FormControl mt={4}>
                 <FormLabel>Last Name</FormLabel>
-                <Input placeholder="Last name" />
+                <Input value={lastName} placeholder="Last Name" onChange={(e) => this.handleLastName(e)} />
               </FormControl>
 
               <FormControl mt={4}>
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="Last name" />
+                <Input value={phoneNumber} placeholder="Phone Number" onChange={(e) => this.handlePhoneNumber(e)} />
               </FormControl>
 
               <FormControl mt={4}>
@@ -76,9 +104,8 @@ class SettingModal extends React.Component {
             </ModalBody>
             <ModalFooter>
               <Button colorScheme="blue" mr={3} onClick={() => this.setState({ isPaneOpen: false })}>
-                Save
+                Done
                     </Button>
-              <Button onClick={() => this.setState({ isPaneOpen: false })}>Cancel</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

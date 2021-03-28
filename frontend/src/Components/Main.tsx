@@ -12,7 +12,7 @@ import audioon from '../assets/audioon.svg';
 import audiooff from '../assets/audiooff.svg';
 import videoon from '../assets/videoon.svg';
 import videooff from '../assets/videooff.svg';
-
+import Camera from '../Camera';
 export default class Main extends React.Component {
     constructor(props: any) {
         super(props);
@@ -28,16 +28,13 @@ export default class Main extends React.Component {
             <div>
                 <div className="top-menu">
                     <div>
-                        {video && (
-                            <button className="recording red" disabled>Video Recording</button>
-                        )}
                         {audio && (
                             <button className="recording green" disabled>Audio Recording</button>
                         )}
+                        {video && (
+                            <button className="recording red" disabled>Video Recording</button>
+                        )}
                     </div>
-                </div>
-                <div className="top-menu">
-                    <SettingModal />
                 </div>
                 <div className="menu">
                     <button onClick={() => this.setState({ audio: !audio })} className={!audio ? "start-stop-btn blue" : "start-stop-btn red"}>
@@ -48,8 +45,18 @@ export default class Main extends React.Component {
                         <img className="icon2" src={video ? videoon : videooff} />
                         {video ? "Stop " : "Start "} Video
                     </button>
+
+                    <SettingModal />
                 </div>
-            </div>
+
+                {
+                    video && (
+                        <div className="top-menu">
+                            <Camera />
+                        </div>
+                    )
+                }
+            </div >
         )
     }
 }
